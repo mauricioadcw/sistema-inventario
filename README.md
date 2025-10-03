@@ -15,4 +15,4 @@
 - Todos los archivos `.cpp` están guardados con la codificación **OEM 850 (Europa Occidental, DOS)**.
 - Esto asegura que los caracteres especiales de los menús (╔, ═, ║, etc.) y los acentos se vean correctamente en la consola.
 - **No abrirlos ni copiarlos desde Notepad**, ya que puede cambiar la codificación y romper los caracteres.
-- En caso de que la consola muestre símbolos raros, asegúrate de que esté usando la página de códigos 850:
+- En caso de que la consola muestre símbolos raros, asegúrate de que esté usando la página de códigos 850.
