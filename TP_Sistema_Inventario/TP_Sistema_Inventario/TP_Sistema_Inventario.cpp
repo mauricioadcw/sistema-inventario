@@ -50,15 +50,15 @@ int main()
 }
 
 void menu() {
-    cout << "\n\tÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ";
+    cout << "\n\tÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖ";
     cout << "\n\t          Inventario de tienda          ";
-    cout << "\n\tÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ";
+    cout << "\n\tÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖ";
     cout << "\n\t 1. Registrar un nuevo producto";
     cout << "\n\t 2. Lista de productos";
     cout << "\n\t 3. Calcular valor total de inventario";
     cout << "\n\t 4. Buscar producto por codigo";
     cout << "\n\t 5. Salir";
-    cout << "\n\tÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ";
+    cout << "\n\tÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖ";
 }
 
 bool procesoDatos(float** inventario, int* n) {
@@ -120,11 +120,11 @@ void registrarProducto(float** inventario, int* n) {
 }
 void listarProductos(float** inventario, int* n) {
     cout << "\n\t "
-        << setw(8) << "Codigo ³ "
-        << setw(7) << "Stock ³ "
+        << setw(8) << "Codigo ü "
+        << setw(7) << "Stock ü "
         << setw(5) << "Precio"
         << endl;
-    cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄ" << endl;
+    cout << "\tŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽ" << endl;
     
 
     for (int i = 0; i < *n; i++)
@@ -132,16 +132,16 @@ void listarProductos(float** inventario, int* n) {
         if (i == 0 && inventario[i][0] == 0)
         {
             cout << "\t "
-                << setw(9) << "- ³ "
-                << setw(8) << "- ³ "
+                << setw(9) << "- ü "
+                << setw(8) << "- ü "
                 << setw(6) << "-"
                 << endl;
         }
         if (inventario[i][0] != 0)
         {
             cout << "\t "
-                << setw(6) << inventario[i][0] << " ³ "
-                << setw(5) << inventario[i][1] << " ³ "
+                << setw(6) << inventario[i][0] << " ü "
+                << setw(5) << inventario[i][1] << " ü "
                 << setw(6) << inventario[i][2]
                 << endl;
             
@@ -152,12 +152,12 @@ void valorInventario(float** inventario, int* n) {
     float total = 0;
     int cont = 0;
     cout << "\n\t "
-            << setw(8) << "Codigo ³ "
-            << setw(7) << "Stock ³ "
-            << setw(5) << "Precio ³ "
+            << setw(8) << "Codigo ü "
+            << setw(7) << "Stock ü "
+            << setw(5) << "Precio ü "
             << setw(5) << "Valor"
             << endl;
-    cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄ" << endl;
+    cout << "\tŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽ" << endl;
 
     for (int i = 0; i < *n; i++) {
         if (inventario[i][0] != 0) {
@@ -166,9 +166,9 @@ void valorInventario(float** inventario, int* n) {
             total = total + valor;
 
             cout << "\t "
-                << setw(6) << inventario[i][0] << " ³ "
-                << setw(5) << inventario[i][1] << " ³ "
-                << setw(6) << inventario[i][2] << " ³ "
+                << setw(6) << inventario[i][0] << " ü "
+                << setw(5) << inventario[i][1] << " ü "
+                << setw(6) << inventario[i][2] << " ü "
                 << setw(6) << valor
                 << endl;
         }
@@ -202,15 +202,15 @@ void buscarProducto(float** inventario, int* n) {
     {
         cout << "\n\t> Producto encontrado:" << endl;
         cout << "\n\t "
-            << setw(8) << "Codigo ³ "
-            << setw(7) << "Stock ³ "
+            << setw(8) << "Codigo ü "
+            << setw(7) << "Stock ü "
             << setw(5) << "Precio"
             << endl;
-        cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄ" << endl;
+        cout << "\tŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽŽ" << endl;
 
         cout << "\t "
-            << setw(6) << inventario[fila][0] << " ³ "
-            << setw(5) << inventario[fila][1] << " ³ "
+            << setw(6) << inventario[fila][0] << " ü "
+            << setw(5) << inventario[fila][1] << " ü "
             << setw(6) << inventario[fila][2]
             << endl;
     }
