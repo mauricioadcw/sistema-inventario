@@ -125,6 +125,7 @@ void listarProductos(float** inventario, int* n) {
         << setw(5) << "Precio"
         << endl;
     cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄ" << endl;
+    
 
     for (int i = 0; i < *n; i++)
     {
@@ -143,19 +144,41 @@ void listarProductos(float** inventario, int* n) {
                 << setw(5) << inventario[i][1] << " ³ "
                 << setw(6) << inventario[i][2]
                 << endl;
+            
         }
     }
 }
 void valorInventario(float** inventario, int* n) {
     float total = 0;
-    for (int i = 0; i < *n; i++)
-    {
-        if (inventario[i][0] != 0)
-        {
-            total += inventario[i][1] * inventario[i][2];
+    int cont = 0;
+    cout << "\n\t "
+            << setw(8) << "Codigo ³ "
+            << setw(7) << "Stock ³ "
+            << setw(5) << "Precio ³ "
+            << setw(5) << "Valor"
+            << endl;
+    cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄ" << endl;
+
+    for (int i = 0; i < *n; i++) {
+        if (inventario[i][0] != 0) {
+            cont = cont + 1;
+            float valor = inventario[i][1] * inventario[i][2];
+            total = total + valor;
+
+            cout << "\t "
+                << setw(6) << inventario[i][0] << " ³ "
+                << setw(5) << inventario[i][1] << " ³ "
+                << setw(6) << inventario[i][2] << " ³ "
+                << setw(6) << valor
+                << endl;
         }
     }
-    cout << "\n\t> El valor total del inventario es: S/" << total << endl;
+
+    if (cont == 0) {
+        cout << "\n\tNo hay productos.\n";
+    }
+
+    cout << "\n\tValor total del inventario: S/ " << total << "\n";
 }
 void buscarProducto(float** inventario, int* n) {
     int codigoBucado, fila;
