@@ -5,14 +5,25 @@
 2. Abrir **Visual Studio**.
 3. Ir a `Archivo > Abrir > Proyecto/Solución`.
 4. Seleccionar el archivo `.sln` que está en la carpeta del proyecto.
-5. Compilar y ejecutar (Ctrl + F5).
+5. Compilar y ejecutar con **Ctrl + F5**.
+
+## Descripción
+Sistema básico de inventario desarrollado en C++.  
+Permite registrar, listar, buscar, modificar y calcular el valor total de los productos almacenados.
 
 ## Notas
-- El proyecto fue desarrollado en Visual Studio con C++.
-- Asegúrate de abrir el `.sln`, no solo los `.cpp`, para evitar problemas al compilar.
+- El proyecto fue creado y probado en **Visual Studio (Windows)**.  
+- Utiliza salida por consola en formato ASCII (sin caracteres extendidos).  
+- Todos los archivos `.cpp` están guardados con **codificación UTF-8**.  
+- No requiere librerías externas, solo las del estándar de C++.
 
-## Codificación de los archivos
-- Todos los archivos `.cpp` están guardados con la codificación **OEM 850 (Europa Occidental, DOS)**.
-- Esto asegura que los caracteres especiales de los menús (╔, ═, ║, etc.) y los acentos se vean correctamente en la consola.
-- **No abrirlos ni copiarlos desde Notepad**, ya que puede cambiar la codificación y romper los caracteres.
-- En caso de que la consola muestre símbolos raros, asegúrate de que esté usando la página de códigos 850.
+## Menú principal (versión ASCII)
+========================================
+          Inventario de tienda
+========================================
+1. Registrar un nuevo producto
+2. Lista de productos
+3. Calcular valor total de inventario
+ 4. Buscar producto por codigo
+5. Salir
+========================================
