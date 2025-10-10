@@ -1,19 +1,22 @@
 #include <iostream>
 #include <iomanip>
+#include <string>
+#include <cctype>
 using namespace std;
 
 void menu();
 
-bool procesoDatos(float**, int*);
-void registrarProducto(float**, int*);
-void listarProductos(float**, int*);
-void valorInventario(float**, int*);
-void buscarProducto(float**, int*);
+bool procesoDatos(float**, string*, int*);
+void registrarProducto(float**, string*, int*);
+void listarProductos(float**, string*, int*);
+void valorInventario(float**, string*, int*);
+void buscarProducto(float**, string*, int*);
 
 int asignarPosicion(float**, int*);
 bool codigoValido(int, float**, int*, bool evCodigoExist = true);
-void expandirInvent(float***, int*);
-void verificarExpansion(float***, int*);
+bool esNumero(string);
+void expandirInvent(float***, string**, int*);
+void verificarExpansion(float***, string**, int*);
 
 int main()
 {
@@ -21,6 +24,7 @@ int main()
     *n = 2;
 
     float** inventario = new float* [*n];
+    string* nombres = new string[*n];
 
     for (int i = 0; i < *n; i++)
     {
@@ -29,14 +33,16 @@ int main()
         {
             inventario[i][j] = 0;
         }
+        nombres[i] = "";
     }
 
     bool salir;
     do
     {
+
         menu();
-        salir = procesoDatos(inventario, n);
-        verificarExpansion(&inventario, n);
+        salir = procesoDatos(inventario, nombres, n);
+        verificarExpansion(&inventario, &nombres, n);
     } while (!salir);
 
     for (int i = 0; i < *n; i++)
@@ -44,87 +50,146 @@ int main()
         delete[] inventario[i];
     }
     delete[] inventario;
+    delete[] nombres;
     delete n;
 
     return 0;
 }
 
 void menu() {
-    cout << "\n\tÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ";
+    cout << "\n\t========================================";
     cout << "\n\t          Inventario de tienda          ";
-    cout << "\n\tÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ";
+    cout << "\n\t========================================";
     cout << "\n\t 1. Registrar un nuevo producto";
     cout << "\n\t 2. Lista de productos";
     cout << "\n\t 3. Calcular valor total de inventario";
     cout << "\n\t 4. Buscar producto por codigo";
     cout << "\n\t 5. Salir";
-    cout << "\n\tÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ";
+    cout << "\n\t========================================\n";
 }
 
-bool procesoDatos(float** inventario, int* n) {
-    int opcion;
+bool procesoDatos(float** inventario, string* nombres, int* n) {
+    string entrada;
+    int opcion = 0;
     do
     {
-        cout << "\n\tEliga una opcion (1 - 5): "; cin >> opcion;
+        cout << "\tElija una opcion (1 - 5): "; cin >> entrada;
+        if (!esNumero(entrada))
+        {
+            continue;
+        }
+        else
+        {
+            opcion = stoi(entrada);
+        }
         if (opcion < 1 || opcion > 5)
         {
-            cout << "\t> ERROR: Opcion no valida" << endl;
+            cout << "\t> ERROR: Opcion no valida\n" << endl;
         }
     } while (opcion < 1 || opcion > 5);
 
     switch (opcion)
     {
-    case 1: registrarProducto(inventario, n); break;
-    case 2: listarProductos(inventario, n); break;
-    case 3: valorInventario(inventario, n); break;
-    case 4: buscarProducto(inventario, n); break;
+    case 1: registrarProducto(inventario, nombres, n); break;
+    case 2: listarProductos(inventario, nombres, n); break;
+    case 3: valorInventario(inventario, nombres, n); break;
+    case 4: buscarProducto(inventario, nombres, n); break;
     case 5: cout << "\n\t> See u next time ;)" << endl; return true;
     }
 
     return false;
 }
-void registrarProducto(float** inventario, int* n) {
-    int codigo, stock;
-    float precio;
+void registrarProducto(float** inventario, string* nombres, int* n) {
+    int codigo = 0, stock = 0;
+    float precio = 0.0;
+    string nombre;
+    string entrada;
     int fila;
 
-    do
-    {
-        cout << "\tIngrese el codigo del producto: "; cin >> codigo;
-    } while (!codigoValido(codigo, inventario, n));
 
-    do
+    while (true)
     {
-        cout << "\tIngrese el stock del producto: "; cin >> stock;
+        cout << "\tIngrese el codigo del producto: "; cin >> entrada;
+        if (!esNumero(entrada))
+        {
+            continue;
+        }
+        else
+        {
+            codigo = stoi(entrada);
+        }
+        if (codigoValido(codigo, inventario, n))
+        {
+            break;
+        }
+    }
+
+    while (true)
+    {
+        cout << "\tIngrese el stock del producto: "; cin >> entrada;
+        if (!esNumero(entrada))
+        {
+            continue;
+        }
+        else
+        {
+            stock = stoi(entrada);
+        }
         if (stock < 0)
         {
             cout << "\t> ERROR: El stock no puede ser negativo\n" << endl;
+            continue;
         }
-    } while (stock < 0);
+        break;
+    }
 
-    do
+    while (true)
     {
-        cout << "\tIngrese el precio del producto: "; cin >> precio;
+        cout << "\tIngrese el precio del producto: "; cin >> entrada;
+        if (!esNumero(entrada))
+        {
+            continue;
+        }
+        else
+        {
+            precio = stof(entrada);
+        }
         if (precio < 0)
         {
             cout << "\t> ERROR: El precio no puede ser negativo\n" << endl;
+            continue;
         }
-    } while (precio < 0);
+        break;
+    }
+
+    cin.ignore(10000, '\n');
+    do
+    {
+        cout << "\tIngrese el nombre del producto: ";
+        getline(cin, nombre);
+        if (nombre == "")
+        {
+            cout << "\t> ERROR: El nombre no puede estar vacio\n" << endl;
+        }
+    } while (nombre == "");
 
     fila = asignarPosicion(inventario, n);
     inventario[fila][0] = codigo;
     inventario[fila][1] = stock;
     inventario[fila][2] = precio;
+    nombres[fila] = nombre;
 
     cout << "\n\t> Producto registrado con exito!" << endl;
 }
-void listarProductos(float** inventario, int* n) {
+void listarProductos(float** inventario, string* nombres, int* n) {
     cout << "\n\t "
-        << setw(8) << "Codigo ³ "
-        << setw(7) << "Stock ³ "
-        << setw(5) << "Precio"
+        << left
+        << setw(17) << "Nombre" << " | "
+        << setw(6) << "Codigo" << " | "
+        << setw(5) << "Stock" << " | "
+        << "Precio"
         << endl;
-    cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄ" << endl;
+    cout << "\t-------------------|--------|-------|--------" << endl;
     
 
     for (int i = 0; i < *n; i++)
@@ -132,32 +197,40 @@ void listarProductos(float** inventario, int* n) {
         if (i == 0 && inventario[i][0] == 0)
         {
             cout << "\t "
-                << setw(9) << "- ³ "
-                << setw(8) << "- ³ "
+                << left
+                << setw(17) << "-" << " | "
+                << right
+                << setw(6) << "-" << " | "
+                << setw(5) << "-" << " | "
                 << setw(6) << "-"
                 << endl;
         }
         if (inventario[i][0] != 0)
         {
             cout << "\t "
-                << setw(6) << inventario[i][0] << " ³ "
-                << setw(5) << inventario[i][1] << " ³ "
+                << left
+                << setw(17) << nombres[i] << " | "
+                << setw(6) << inventario[i][0] << " | "
+                << right
+                << setw(5) << inventario[i][1] << " | "
                 << setw(6) << inventario[i][2]
                 << endl;
             
         }
     }
 }
-void valorInventario(float** inventario, int* n) {
+void valorInventario(float** inventario, string* nombres, int* n) {
     float total = 0;
     int cont = 0;
     cout << "\n\t "
-            << setw(8) << "Codigo ³ "
-            << setw(7) << "Stock ³ "
-            << setw(5) << "Precio ³ "
-            << setw(5) << "Valor"
-            << endl;
-    cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄ" << endl;
+        << left
+        << setw(17) << "Nombre" << " | "
+        << setw(6) << "Codigo" << " | "
+        << setw(5) << "Stock" << " | "
+        << setw(6) << "Precio" << " | "
+        << "Valor"
+        << endl;
+    cout << "\t-------------------|--------|-------|--------|-------" << endl;
 
     for (int i = 0; i < *n; i++) {
         if (inventario[i][0] != 0) {
@@ -166,9 +239,12 @@ void valorInventario(float** inventario, int* n) {
             total = total + valor;
 
             cout << "\t "
-                << setw(6) << inventario[i][0] << " ³ "
-                << setw(5) << inventario[i][1] << " ³ "
-                << setw(6) << inventario[i][2] << " ³ "
+                << left
+                << setw(17) << nombres[i] << " | "
+                << setw(6) << inventario[i][0] << " | "
+                << right
+                << setw(5) << inventario[i][1] << " | "
+                << setw(6) << inventario[i][2] << " | "
                 << setw(5) << valor
                 << endl;
         }
@@ -180,17 +256,27 @@ void valorInventario(float** inventario, int* n) {
 
     cout << "\n\tValor total del inventario: S/ " << total << "\n";
 }
-void buscarProducto(float** inventario, int* n) {
-    int codigoBucado, fila;
+void buscarProducto(float** inventario, string* nombres, int* n) {
+    int codigoBuscado = 0, fila;
+    string entrada;
     bool encontrado = false;
+
     do
     {
-        cout << "\tIngrese el codigo del producto a buscar: "; cin >> codigoBucado;
-    } while (!codigoValido(codigoBucado, inventario, n, false));
+        cout << "\tIngrese el codigo del producto a buscar: "; cin >> entrada;
+        if (!esNumero(entrada))
+        {
+            continue;
+        }
+        else
+        {
+            codigoBuscado = stoi(entrada);
+        }
+    } while (!codigoValido(codigoBuscado, inventario, n, false));
 
     for (int i = 0; i < *n; i++)
     {
-        if (inventario[i][0] == codigoBucado)
+        if (inventario[i][0] == codigoBuscado)
         {
             encontrado = true;
             fila = i;
@@ -202,15 +288,20 @@ void buscarProducto(float** inventario, int* n) {
     {
         cout << "\n\t> Producto encontrado:" << endl;
         cout << "\n\t "
-            << setw(8) << "Codigo ³ "
-            << setw(7) << "Stock ³ "
-            << setw(5) << "Precio"
+            << left
+            << setw(17) << "Nombre" << " | "
+            << setw(6) << "Codigo" << " | "
+            << setw(5) << "Stock" << " | "
+            << "Precio"
             << endl;
-        cout << "\tÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄ" << endl;
+        cout << "\t-------------------|--------|-------|--------" << endl;
 
         cout << "\t "
-            << setw(6) << inventario[fila][0] << " ³ "
-            << setw(5) << inventario[fila][1] << " ³ "
+            << left
+            << setw(17) << nombres[fila] << " | "
+            << setw(6) << inventario[fila][0] << " | "
+            << right
+            << setw(5) << inventario[fila][1] << " | "
             << setw(6) << inventario[fila][2]
             << endl;
     }
@@ -249,16 +340,46 @@ bool codigoValido(int codigo, float** inventario, int* n, bool evCodigoExist) {
     }
     return true;
 }
-void expandirInvent(float*** inventario, int* n) {
+bool esNumero(string entrada) {
+    bool punto = false;
+
+    if (entrada == "" || entrada == ".") {
+        cout << "\t> ERROR: Valor ingresado no valido\n" << endl;
+        return false;
+    }
+
+    for (int i = 0; i < entrada.size(); i++)
+    {
+        char c = entrada[i];
+        if (c == '.')
+        {
+            if (punto)
+            {
+                cout << "\t> ERROR: Valor ingresado no valido\n" << endl;
+                return false;
+            }
+            punto = true;
+        }
+        else if (!isdigit(c))
+        {
+            cout << "\t> ERROR: Se esperaba un numero\n" << endl;
+            return false;
+        }
+    }
+    return true;
+}
+void expandirInvent(float*** inventario, string** nombres, int* n) {
     int nuevoTam = *n + 3;
 
     float** nuevo = new float* [nuevoTam];
+    string* nuevosNombres = new string[nuevoTam];
 
     for (int i = 0; i < *n; i++) {
         nuevo[i] = new float[3];
         for (int j = 0; j < 3; j++) {
             nuevo[i][j] = (*inventario)[i][j];
         }
+        nuevosNombres[i] = (*nombres)[i];
     }
 
     for (int i = *n; i < nuevoTam; i++) {
@@ -266,19 +387,23 @@ void expandirInvent(float*** inventario, int* n) {
         for (int j = 0; j < 3; j++) {
             nuevo[i][j] = 0;
         }
+        nuevosNombres[i] = "";
     }
 
     for (int i = 0; i < *n; i++) {
         delete[](*inventario)[i];
     }
     delete[] * inventario;
+    delete[] * nombres;
 
     *inventario = nuevo;
+    *nombres = nuevosNombres;
     *n = nuevoTam;
 }
-void verificarExpansion(float*** inventario, int* n) {
+void verificarExpansion(float*** inventario, string** nombres, int* n) {
     if ((*inventario)[*n - 1][0] != 0)
     {
-        expandirInvent(inventario, n);
+        expandirInvent(inventario, nombres, n);
+        // cout << "\t> Inventario expandido automaticamente." << endl;
     }
 }
