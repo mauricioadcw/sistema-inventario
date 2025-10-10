@@ -9,7 +9,7 @@
 
 ## Descripción
 Sistema básico de inventario desarrollado en C++.  
-Permite registrar, listar, buscar, modificar y calcular el valor total de los productos almacenados.
+Permite registrar, listar, buscar y calcular el valor total de los productos almacenados.
 
 ## Notas
 - El proyecto fue creado y probado en **Visual Studio (Windows)**.  
