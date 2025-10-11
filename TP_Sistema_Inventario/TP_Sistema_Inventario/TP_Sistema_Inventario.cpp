@@ -2,6 +2,10 @@
 #include <iomanip>
 #include <string>
 #include <cctype>
+#include <cstdlib>
+#include <windows.h>
+#include <conio.h>
+
 using namespace std;
 
 void menu();
@@ -57,6 +61,7 @@ int main()
 }
 
 void menu() {
+    system("cls");
     cout << "\n\t========================================";
     cout << "\n\t          Inventario de tienda          ";
     cout << "\n\t========================================";
@@ -179,7 +184,8 @@ void registrarProducto(float** inventario, string* nombres, int* n) {
     inventario[fila][2] = precio;
     nombres[fila] = nombre;
 
-    cout << "\n\t> Producto registrado con exito!" << endl;
+    cout << "\n\t> Producto registrado con exito!";
+    Sleep(1500);
 }
 void listarProductos(float** inventario, string* nombres, int* n) {
     cout << "\n\t "
@@ -218,6 +224,8 @@ void listarProductos(float** inventario, string* nombres, int* n) {
             
         }
     }
+    cout << "\n\tPresione una tecla para continuar...";
+    _getch();
 }
 void valorInventario(float** inventario, string* nombres, int* n) {
     float total = 0;
@@ -255,6 +263,9 @@ void valorInventario(float** inventario, string* nombres, int* n) {
     }
 
     cout << "\n\tValor total del inventario: S/ " << total << "\n";
+
+    cout << "\n\tPresione una tecla para continuar...";
+    _getch();
 }
 void buscarProducto(float** inventario, string* nombres, int* n) {
     int codigoBuscado = 0, fila;
@@ -304,10 +315,14 @@ void buscarProducto(float** inventario, string* nombres, int* n) {
             << setw(5) << inventario[fila][1] << " | "
             << setw(6) << inventario[fila][2]
             << endl;
+
+        cout << "\n\tPresione una tecla para continuar...";
+        _getch();
     }
     else
     {
         cout << "\n\t> Sin existencias" << endl;
+        Sleep(1500);
     }
 }
 
